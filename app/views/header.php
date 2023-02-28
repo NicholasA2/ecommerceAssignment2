@@ -6,6 +6,8 @@
         <div>
             <h1 style="color:black; text-align: center;"><?= $data ?></h1>
             <ul>
+                <li><a href='/Main/index' >Home Page</a></li>
+                <li><a href='/Main/' >Enter search terms</a></li>
                 <li><a href='/Main/' >Login</a></li>
                 <li><a href='/Main/' >Register</a></li>
                 <li><a href='/Main/'>Continue as guest</a></li>
