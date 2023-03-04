@@ -9,6 +9,7 @@ class User extends \app\core\Model{
 	public function getByUsername($username){
 		$SQL = 'SELECT * FROM User WHERE username = :username';
 		$STH = $this->connection->prepare($SQL);
+		//$STH = self::$_connection->prepare($SQL);
 
 		$STH->execute(['username'=>$username]);
 		$STH->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\User');
