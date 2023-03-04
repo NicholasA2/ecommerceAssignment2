@@ -40,4 +40,20 @@ class User extends \app\core\Controller{
 				$this->view('User/register');
 			}
 	}
+
+	public function logout(){
+		session_destroy();
+		header('location:/User/index');
+	}
+
+	public function profile(){
+		if(!isset($_SESSION['user_id'])){
+			header('location:/User/index');
+			return;
+		}
+		$message = new \app\models\Profile();
+		$messages = $message->getAllForUser($_SESSION['user_id']);
+		$this->view('User/profile',$messages);
+	}
+//CHANGE this to posts and profile since we don't have messages
 }
