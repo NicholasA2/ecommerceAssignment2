@@ -23,4 +23,4 @@
                 <?php    } ?>
         </div>
     </head>
-    <body style="display:flex;">
+    <body>
