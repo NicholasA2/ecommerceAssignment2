@@ -5,10 +5,10 @@ class Model{
 	protected static $_connection;
 
 	public function __construct(){
-		$server = 'localhost';
+		$host = 'localhost';
 		$dbname = 'cliquebait';
-		$username = 'root';
-		$password = '';
+		$user = 'root';
+		$pass = '';
 
 		try{
 			$this->connection = new \PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
