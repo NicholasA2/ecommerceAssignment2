@@ -9,9 +9,8 @@ class User extends \app\core\Controller{
 			$user = $user->getByUsername($_POST['username']);
 			if($user){
 				if(password_verify($_POST['password'], $user->password_hash)){
-					$_SESSION['user_id'] = $user->user_id;
-					$_SESSION['username'] = $user->username;
-					header('location:/User/profile');
+					
+					header('location:/User/profile'); //should take you to pubication index since its the main page where you see posts
 				}else{
 					header('location:/User/index?error=Bad username/password combination');
 				}
@@ -29,9 +28,11 @@ class User extends \app\core\Controller{
 				$user = new \app\models\User();
 				$usercheck = $user->getByUsername($_POST['username']);
 				if(!$usercheck){
+		
 					$user->username= $_POST['username'];
 					$user->password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-					$user->insert();
+					$_SESSION['user_id'] = $user->insert();
+					$_SESSION['username'] = $user->username;
 					header('location:/Profile/create');
 				}else{
 					header('location:/User/register?error=Username ' . $_POST['username'] . ' already in use. Choose another.');
