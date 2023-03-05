@@ -14,7 +14,7 @@ class Profile extends \app\core\Controller{
 
 	public function create(){
 		if(isset($_POST['action'])){
-			$profile = new \app\models\ProfileInformation();
+			$profile = new \app\models\Profile();
 
 			$profile->user_id = $_SESSION['user_id'];
 			$profile->first_name =  $_POST['first_name'];

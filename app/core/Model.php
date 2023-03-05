@@ -11,7 +11,7 @@ class Model{
 		$password = '';
 
 		try{
-			$this->connection = new \PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+			$this->connection = new \PDO("mysql:host=$server;dbname=$dbname", $username, $password);
 		}catch(\Exception $e){
 			echo "Failed connecting to the database";
 			exit(0);
