@@ -9,8 +9,8 @@ class User extends \app\core\Controller{
 			$user = $user->getByUsername($_POST['username']);
 			if($user){
 				if(password_verify($_POST['password'], $user->password_hash)){
-					
-					header('location:/User/profile'); //should take you to pubication index since its the main page where you see posts
+					$_SESSION['user_id'] = $user->user_id;
+					header('location:/Main/index');
 				}else{
 					header('location:/User/index?error=Bad username/password combination');
 				}
@@ -28,12 +28,11 @@ class User extends \app\core\Controller{
 				$user = new \app\models\User();
 				$usercheck = $user->getByUsername($_POST['username']);
 				if(!$usercheck){
-		
 					$user->username= $_POST['username'];
 					$user->password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
 					$_SESSION['user_id'] = $user->insert();
 					$_SESSION['username'] = $user->username;
-					header('location:/Profile/create');
+					header('location:/Main/index');
 				}else{
 					header('location:/User/register?error=Username ' . $_POST['username'] . ' already in use. Choose another.');
 				}
@@ -45,17 +44,17 @@ class User extends \app\core\Controller{
 
 	public function logout(){
 		session_destroy();
-		header('location:/User/index');
+		header('location:/Main/index');
 	}
 
-	//public function profile(){
-	//	if(!isset($_SESSION['user_id'])){
-	//		header('location:/User/index');
-	//		return;
-	//	}
-	//	$message = new \app\models\Profile();
-	//	$messages = $message->getAllForUser($_SESSION['user_id']);
-	//	$this->view('User/profile',$messages);
-	//}
+	public function profile(){
+		if(!isset($_SESSION['user_id'])){
+			header('location:/User/index');
+			return;
+		}
+		$profile = new \app\models\Profile();
+		$profile = $posts->getAllForUser($_SESSION['user_id']);
+		$this->view('User/profile',$posts);
+	}
 //CHANGE this to posts and profile since we don't have messages
 }

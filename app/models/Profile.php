@@ -7,6 +7,10 @@ class Profile extends \app\core\Model{
 	public $last_name;
 	public $middle_name;
 
+	public function __toString(){
+		return "$this->first_name $this->middle_name $this->last_name";
+	}
+
 	public function getByUserId($user_id){
 		$SQL = "SELECT * FROM profile WHERE user_id=:user_id";
 		$STH = $this->connection->prepare($SQL);
@@ -14,6 +18,14 @@ class Profile extends \app\core\Model{
 		$STH->setFetchMode(\PDO::FETCH_CLASS,'app\\models\\Profile');
 		return $STH->fetch();
 	}
+
+	public function getPublications(){
+        $SQL = "SELECT * FROM publication WHERE profile_id=:user_id ORDER BY timestamp DESC";
+        $STMT = $this->connection->prepare($SQL);
+        $STMT->execute(['user_id'=>$this->user_id]);
+        $STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\models\Publication');
+        return $STMT->fetchAll();
+    }
 
 	public function insert(){
 		$SQL = "INSERT INTO profile(user_id,first_name,last_name,middle_name) VALUE (:user_id,:first_name,:last_name,:middle_name)";

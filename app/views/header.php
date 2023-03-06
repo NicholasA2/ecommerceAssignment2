@@ -23,4 +23,4 @@
                 <?php    } ?>
         </div>
     </head>
-    <body>
+    <body style="text-align: center;">
