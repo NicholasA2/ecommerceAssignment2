@@ -1,4 +1,4 @@
-<?php $this->view('header', 'Cliquebait'); ?>
+<?php $this->view('header', 'CliqueBait'); ?>
 
 <h1><?= $data ?></h1>
 
@@ -16,4 +16,5 @@ foreach ($publications as $publication) {
 }
 ?>
 
-<?php $this->view('footer'); ?>
+
+<?php $this->view('footer');

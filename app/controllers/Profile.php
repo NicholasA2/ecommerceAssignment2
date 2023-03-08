@@ -2,14 +2,12 @@
 namespace app\controllers;
 
 class Profile extends \app\core\Controller{
-	public function index(){
+	//access filter
+	public function index($profile_id){
 		//view the profile
 		$profile = new \app\models\Profile();
-		$profile = $profile->getByUserId($_SESSION['user_id']);
-		if($profile)
-			$this->view('Profile/index',$profile);
-		else
-			header('location:/Profile/create');
+		$profile = $profile->getByUserId($profile_id);	
+		$this->view('Profile/index', $profile);
 	}
 
 	public function create(){
