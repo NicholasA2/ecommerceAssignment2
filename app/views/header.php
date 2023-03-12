@@ -1,3 +1,10 @@
+<?php
+    if(isset($_SESSION['user_id'])) {
+        $currentUser = new \app\models\Profile();
+        $currentUser = $currentUser->getByUserId($_SESSION['user_id'])->user_id;
+    }
+?>
+
 <html>
     <head>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js%22%3E%22%3E"></script>
@@ -18,7 +25,7 @@
                         <a href="/User/register"><i style="font-size: 2rem;" class='bi-person-add' title="Register"></i></a>
                 <?php } else { ?>
                         <a href="/User/logout"><i style="font-size: 2rem;" class='bi-file-x' title="Log Out"></i></a>
-                        <a href="/Profile/index"><i style="font-size: 2rem;" class='bi-person-fill' title="Profile"></i></a>
+                        <a href="/Profile/index/<?= $currentUser ?>"><i style="font-size: 2rem;" class='bi-person-fill' title="Profile"></i></a>
                         <a href="/Publication/create"><i style="font-size: 2rem;" class='bi-clipboard2-plus' title="New Post"></i></a>
                 <?php    } ?>
         </div>

@@ -3,10 +3,10 @@ namespace app\controllers;
 
 class Profile extends \app\core\Controller{
 	//access filter
-	public function index($profile_id){
+	public function index($user_id){
 		//view the profile
 		$profile = new \app\models\Profile();
-		$profile = $profile->getByUserId($profile_id);	
+		$profile = $profile->getByUserId($user_id);
 		$this->view('Profile/index', $profile);
 	}
 
@@ -28,8 +28,11 @@ class Profile extends \app\core\Controller{
 	}
 
 	public function edit(){
-		$profile = new \app\models\Profile();
-		$profile = $profile->getByUserId($_SESSION['user_id']);
+		if (isset($_SESSION['user_id'])) {
+			$profile = new \app\models\Profile();
+			$profile = $profile->getByUserId($_SESSION['user_id']);
+			$currentUser = $_SESSION['user_id'];
+		}
 
 		if(isset($_POST['action'])){
 
@@ -38,10 +41,13 @@ class Profile extends \app\core\Controller{
 			$profile->middle_name =  $_POST['middle_name'];
 
 			$success = $profile->update();
-			if($success)
-				header('location:/Profile/index?success=Profile modified.');
-			else
-				header('location:/Profile/index?error=Something went wrong.');
+			if($success > 0)
+				header("location:/Profile/index/{$_SESSION['user_id']}?success=Profile modified.");
+			else if($success == 0)
+				header("location:/Profile/index/{$_SESSION['user_id']}?success=Nothing modified.");
+			else {
+				header("location:/Profile/index/{$_SESSION['user_id']}?error=Something went wrong.");
+			}
 		}else{
 			$this->view('Profile/edit',$profile);
 		}

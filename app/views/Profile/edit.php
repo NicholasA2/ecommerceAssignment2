@@ -14,6 +14,8 @@
 	</div>
 	<input type='submit' name='action' value="Modify" class='btn btn-primary' />
 </form>
-<a href='/Profile/' class='btn btn-secondary'>Cancel</a>
+<?php
+	echo '<a href="/Profile/index/' . $_SESSION['user_id'] . '" class="btn btn-secondary">Cancel</a>';
+?>
 
 <?php $this->view('footer'); ?>

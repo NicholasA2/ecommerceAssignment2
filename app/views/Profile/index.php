@@ -4,7 +4,7 @@
 
 <?php
 if(isset($_SESSION['user_id']) && $_SESSION['user_id'] == $data->user_id){
-    echo '<a href="/Profile/edit">Edit my profile</a>';
+    echo '<a href="/Profile/edit/' . $_SESSION['user_id'] . '">Edit my profile</a>';
 }
 ?>
 
