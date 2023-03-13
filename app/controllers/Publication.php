@@ -14,7 +14,7 @@ class Publication extends \app\core\Controller{
 			if($filename){
 				$publication->picture = $filename;
 				$publication->insert();
-				header('location:/Profile/index/');
+				header("location:/Profile/index/{$_SESSION['user_id']}");
 			}else{
 				header('location:/Publication/create/');
 			}
@@ -30,7 +30,7 @@ class Publication extends \app\core\Controller{
 		if(isset($_POST['action']) && $publication->profile_id == $_SESSION['user_id']){
 			$publication->caption = $_POST['caption'];
 			$publication->update();
-			header('location:/Profile/index/');
+			header("location:/Profile/index/{$_SESSION['user_id']}");
 		}else{
 			$this->view('Publication/edit', $publication);
 		}
@@ -49,7 +49,7 @@ class Publication extends \app\core\Controller{
 			unlink("images/$publication->picture");
 			$publication->delete();
 		}
-		header('location:/Profile/index/');
+		header("location:/Profile/index/{$_SESSION['user_id']}");
 	}
 
 }
