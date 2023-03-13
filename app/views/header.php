@@ -1,7 +1,14 @@
 <?php
     if(isset($_SESSION['user_id'])) {
         $currentUser = new \app\models\Profile();
-        $currentUser = $currentUser->getByUserId($_SESSION['user_id'])->user_id;
+        $noProfile = false;
+        if (!$currentUser->getByUserId($_SESSION['user_id'])) { 
+            $noProfile = true;
+        } else {
+            $currentUser = $currentUser->getByUserId($_SESSION['user_id'])->user_id;
+        }
+        
+      
     }
 ?>
 
@@ -16,18 +23,32 @@
                 <form action="/Main/search" method="get" style='display:inline-block'>
                     <div class="input-group">
                         <input type="search" name='search_term' class="form-control" placeholder="Enter search term"/>
-                        <button type="submit" class="btn btn-primary" value="Search"><i class="bi-eye"></i></button>
+                        <button type="submit" class="btn btn-primary" name="action" value="Search"><i class="bi-eye"></i></button>
                     </div>
                 </form>
                 <?php 
                     if (!isset($_SESSION['user_id'])) {?>
                         <a href="/User/index"><i style="font-size: 2rem;" class='bi-door-closed' title="Log in"></i></a>
                         <a href="/User/register"><i style="font-size: 2rem;" class='bi-person-add' title="Register"></i></a>
-                <?php } else { ?>
+
+                <?php } else if ($noProfile){ ?> 
                         <a href="/User/logout"><i style="font-size: 2rem;" class='bi-file-x' title="Log Out"></i></a>
-                        <a href="/Profile/index/<?= $currentUser ?>"><i style="font-size: 2rem;" class='bi-person-fill' title="Profile"></i></a>
+                        <a href="/Profile/create"><i style="font-size: 2rem;" class='bi-person-fill' title="Profile"></i></a>
+
+                        
+                <?php    } else { ?>
+                    <a href="/User/logout"><i style="font-size: 2rem;" class='bi-file-x' title="Log Out"></i></a>
+                            <a href="/Profile/index/<?= $currentUser ?>"><i style="font-size: 2rem;" class='bi-person-fill' title="Profile"></i></a>
                         <a href="/Publication/create"><i style="font-size: 2rem;" class='bi-clipboard2-plus' title="New Post"></i></a>
-                <?php    } ?>
+
+                <?php } ?> 
+                
         </div>
     </head>
     <body style="text-align: center;">
+        <div class="container">
+    <?php
+    if (isset($_GET['error'])) {
+        echo '<div class="alert alert-danger">' .$_GET['error'] .'</div>';
+    }
+    ?>
