@@ -42,19 +42,9 @@ class User extends \app\core\Controller{
 			}
 	}
 
+	#[\app\filters\Login]
 	public function logout(){
 		session_destroy();
 		header('location:/Main/index');
 	}
-
-	public function profile(){
-		if(!isset($_SESSION['user_id'])){
-			header('location:/User/index');
-			return;
-		}
-		$profile = new \app\models\Profile();
-		$profile = $posts->getAllForUser($_SESSION['user_id']);
-		$this->view('User/profile',$posts);
-	}
-//CHANGE this to posts and profile since we don't have messages
 }

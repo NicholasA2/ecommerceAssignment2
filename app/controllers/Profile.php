@@ -2,14 +2,16 @@
 namespace app\controllers;
 
 class Profile extends \app\core\Controller{
-	//access filter
+
+	
 	public function index($user_id){
-		//view the profile
+		//view your profile and others
 		$profile = new \app\models\Profile();
 		$profile = $profile->getByUserId($user_id);
 		$this->view('Profile/index', $profile);
 	}
 
+	#[\app\filters\Login]
 	public function create(){
 		if(isset($_POST['action'])){
 			$profile = new \app\models\Profile();
@@ -27,6 +29,8 @@ class Profile extends \app\core\Controller{
 		}
 	}
 
+	#[\app\filters\Login]
+	#[\app\filters\Profile]
 	public function edit(){
 		if (isset($_SESSION['user_id'])) {
 			$profile = new \app\models\Profile();

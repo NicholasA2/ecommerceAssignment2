@@ -3,6 +3,8 @@ namespace app\controllers;
 
 class Publication extends \app\core\Controller{
 
+	#[\app\filters\Login]
+	#[\app\filters\Profile]
 	public function create(){
 		$profile = new \app\models\Profile();
 		$profile = $profile->getByUserId($_SESSION['user_id']);
@@ -24,6 +26,8 @@ class Publication extends \app\core\Controller{
 		}
 	}
 
+	#[\app\filters\Login]
+	#[\app\filters\Profile]
 	public function edit($publication_id){
 		$publication = new \app\models\Publication();
 		$publication = $publication->get($publication_id);
@@ -42,6 +46,8 @@ class Publication extends \app\core\Controller{
 		$this->view('Publication/details', $publication);
 	}
 
+	#[\app\filters\Login]
+	#[\app\filters\Profile]
 	public function delete($publication_id){
 		$publication = new \app\models\Publication();
 		$publication = $publication->get($publication_id);
