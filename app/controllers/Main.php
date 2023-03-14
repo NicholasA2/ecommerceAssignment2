@@ -9,10 +9,10 @@ class Main extends \app\core\Controller {
         $this->view('Main/index', $publications);
     }
 
-    public function searchPublications($searchEntry) {
+    public function search() {
     	$publication = new \app\models\Publication();
-		$publications = $publication->search($_GET['search_term']);
-		$this->view('Main/index', $publications);
+        $publications = $publication->search($_GET['search_term']);
+        $this->view('Main/index', $publications);
   }
 
 }
