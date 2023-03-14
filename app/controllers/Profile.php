@@ -5,7 +5,7 @@ class Profile extends \app\core\Controller{
 
 	
 	public function index($user_id){
-		//view your profile and others
+		//view the profile
 		$profile = new \app\models\Profile();
 		$profile = $profile->getByUserId($user_id);
 		$this->view('Profile/index', $profile);

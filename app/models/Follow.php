@@ -26,4 +26,11 @@ class Follow extends \app\core\Model{
         return $STMT->fetchAll();
 	}
 	
+	public function isFollowing($profile_id, $user_id) {
+		$SQL = "SELECT * FROM follow WHERE follower_id=:user_id AND followed_id=:profile_id";
+		$STMT = $this->connection->prepare($SQL);
+		$STMT->execute(['user_id'=>$user_id, 'profile_id'=>$profile_id]);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\models\Follow');
+		return ($STMT->rowCount() == 1);
+	}
 }
