@@ -19,10 +19,10 @@ class Follow extends \app\core\Model{
 	}
 
 	public function following($user_id) {
-		$SQL = "SELECT * FROM follow WHERE follower_id=:user_id ORDER BY timestamp DESC";
+		$SQL = "SELECT * FROM publication JOIN follow ON publication.profile_id=follow.followed_id WHERE follow.follower_id=:user_id ORDER BY publication.timestamp DESC";
 		$STMT = $this->connection->prepare($SQL);
 		$STMT->execute(['user_id'=>$user_id]);
-		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\models\Follow');
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\models\Publication');
         return $STMT->fetchAll();
 	}
 	

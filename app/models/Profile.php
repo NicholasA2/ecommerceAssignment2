@@ -47,4 +47,26 @@ class Profile extends \app\core\Model{
 		$STH->execute($data);
 		return $STH->rowCount();
 	}
+
+	
+	public function isFollowed($user_id) {
+		$SQL = "SELECT * FROM follow WHERE follower_id=:user_id AND followed_id=:profile_id";
+		$STMT = $this->connection->prepare($SQL);
+		$STMT->execute(['user_id'=>$user_id, 'profile_id'=>$this->user_id]);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\models\Follow');
+		return ($STMT->rowCount() == 1);
+	}
+
+	public function getFollowers() {
+		$SQL = "SELECT * FROM follow JOIN profile ON follow.follower_id = profile.user_id WHERE follow.followed_id=:user_id";
+		$STMT = $this->connection->prepare($SQL);
+		$STMT->execute(['user_id'=>$this->user_id]);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\models\Profile');
+		return $STMT->fetchAll();
+	}
+
+
+
+
+
 }
